@@ -1,5 +1,8 @@
 # Sistem Login, Register, Ganti Password & Ganti Username (PHP + MySQL)
 
+[![Bahasa Indonesia](https://img.shields.io/badge/BAHASA%20INDONESIA-0969da?style=for-the-badge)](README.md)
+[![English](https://img.shields.io/badge/ENGLISH-6e7681?style=for-the-badge)](README.en.md)
+
 Tugas mata kuliah **Pemrograman Berbasis Obyek**.
 
 | | |
