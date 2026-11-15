@@ -3,7 +3,7 @@
 [![Bahasa Indonesia](https://img.shields.io/badge/BAHASA%20INDONESIA-0969da?style=for-the-badge)](README.md)
 [![English](https://img.shields.io/badge/ENGLISH-6e7681?style=for-the-badge)](README.en.md)
 
-Tugas mata kuliah **Pemrograman Berbasis Obyek**.
+Tugas mata kuliah **Pemrograman Berbasis Platform**.
 
 | | |
 |---|---|
@@ -15,7 +15,19 @@ Tugas mata kuliah **Pemrograman Berbasis Obyek**.
 
 ## Deskripsi
 
-Aplikasi web sederhana berbasis **PHP** dan **MySQL** (menggunakan `mysqli`) untuk mengelola akun pengguna: mendaftar, masuk, mengganti password, mengganti username, keluar, dan menghapus akun. Data disimpan di database `toko_madura`, tabel `users`.
+Repositori ini bukan dimaksudkan sebagai aplikasi berbasis web yang utuh, melainkan sebagai bahan untuk **membedah cara kerja** sistem akun pengguna langkah demi langkah: bagaimana **registrasi** disimpan, bagaimana **login** memeriksa akun dan membuat *session*, bagaimana pengguna **masuk ke dashboard**, sampai bagaimana **mengganti nama (username)** dan **mengganti password** diproses.
+
+Kode ditulis dengan **PHP** dan **MySQL** (menggunakan `mysqli`). Data akun disimpan di database `toko_madura`, tabel `users`.
+
+### Alur yang dibedah
+
+| Tahap | File | Yang terjadi |
+|---|---|---|
+| 1. Registrasi | `register.php` | Username yang diketik dicek ke tabel `users`. Jika belum ada, username dan password disimpan dengan `INSERT`; jika sudah ada, pendaftaran ditolak. |
+| 2. Login | `login.php` | Username dan password dicocokkan dengan data di tabel `users`. Jika cocok, dibuat *session* (`is_login` dan `username`) lalu pengguna diarahkan ke dashboard. Jika sudah login, halaman ini langsung mengarahkan ke dashboard. |
+| 3. Dashboard | `dashboard.php` | *Session* `is_login` diperiksa setiap halaman dibuka; jika tidak ada, pengguna dikembalikan ke `login.php`. Dashboard menyapa pengguna dengan username-nya dan menyediakan tombol **Logout** (menghapus session), **Delete Account** (menghapus akun dari database), serta tautan ke halaman ganti password dan ganti nama. |
+| 4. Ganti Password | `ganti.php` | Password lama diverifikasi, lalu password baru yang sudah dikonfirmasi disimpan dengan `UPDATE`. |
+| 5. Ganti Nama | `gantinama.php` | Ketersediaan username baru dicek, lalu username diperbarui di database dan di *session* sehingga dashboard langsung menampilkan nama baru. |
 
 ---
 
@@ -60,7 +72,7 @@ Aplikasi web sederhana berbasis **PHP** dan **MySQL** (menggunakan `mysqli`) unt
 ## Struktur File
 
 ```
-tugas_pbo/
+C:\wamp64\www\test\
 ├── database.php     # koneksi ke database MySQL
 ├── register.php     # halaman pendaftaran (soal 1)
 ├── login.php        # halaman login
@@ -69,6 +81,8 @@ tugas_pbo/
 ├── gantinama.php    # halaman ganti username (soal 3)
 └── toko_madura.sql  # file database (tabel users dan produk)
 ```
+
+Pada XAMPP, lokasi foldernya adalah `C:\xampp\htdocs\test\`.
 
 ---
 
@@ -105,25 +119,25 @@ tugas_pbo/
 
 ### Langkah 3 — Buat folder proyek
 
-Buat folder baru di dalam direktori web server. Pada panduan ini nama foldernya adalah `tugas_pbo` (boleh diganti sesuai keinginan).
+Buat folder baru di dalam direktori web server. Pada panduan ini nama foldernya adalah `test` (boleh diganti sesuai keinginan).
 
 **WampServer**
 
 ```
-C:\wamp64\www\tugas_pbo
+C:\wamp64\www\test
 ```
 
 **XAMPP**
 
 ```
-C:\xampp\htdocs\tugas_pbo
+C:\xampp\htdocs\test
 ```
 
 > Perbedaannya hanya pada lokasi: WAMP memakai folder **`www`**, sedangkan XAMPP memakai folder **`htdocs`**.
 
 ### Langkah 4 — Letakkan kode program
 
-Salin file berikut ke dalam folder `tugas_pbo` yang sudah dibuat:
+Salin file berikut ke dalam folder `test` yang sudah dibuat:
 
 - `database.php`
 - `register.php`
@@ -132,7 +146,7 @@ Salin file berikut ke dalam folder `tugas_pbo` yang sudah dibuat:
 - `ganti.php`
 - `gantinama.php`
 
-(File `toko_madura.sql` hanya dipakai untuk import database, tidak wajib dimasukkan ke folder web server.)
+(File `toko_madura.sql` juga boleh disimpan di folder ini. File tersebut hanya dipakai saat import database.)
 
 ### Langkah 5 — Jalankan di browser
 
@@ -140,10 +154,10 @@ Buka browser lalu akses:
 
 | Halaman | Alamat |
 |---|---|
-| Register | `http://localhost/tugas_pbo/register.php` |
-| Login | `http://localhost/tugas_pbo/login.php` |
+| Register | `http://localhost/test/register.php` |
+| Login | `http://localhost/test/login.php` |
 
-> Jika Apache kamu berjalan di port selain 80 (misalnya 8080), tambahkan port-nya, contoh: `http://localhost:8080/tugas_pbo/login.php`.
+> Jika Apache kamu berjalan di port selain 80 (misalnya 8080), tambahkan port-nya, contoh: `http://localhost:8080/test/login.php`.
 
 ---
 
