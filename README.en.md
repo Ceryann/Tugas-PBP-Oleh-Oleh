@@ -3,7 +3,7 @@
 [![Bahasa Indonesia](https://img.shields.io/badge/BAHASA%20INDONESIA-6e7681?style=for-the-badge)](README.md)
 [![English](https://img.shields.io/badge/ENGLISH-0969da?style=for-the-badge)](README.en.md)
 
-Assignment for the **Object-Oriented Programming** course (*Pemrograman Berbasis Obyek*).
+Assignment for the **Platform-Based Programming** course (*Pemrograman Berbasis Platform*).
 
 | | |
 |---|---|
@@ -15,7 +15,19 @@ Assignment for the **Object-Oriented Programming** course (*Pemrograman Berbasis
 
 ## Description
 
-A simple web application built with **PHP** and **MySQL** (using `mysqli`) for managing user accounts: register, log in, change password, change username, log out, and delete account. Data is stored in the `toko_madura` database, in the `users` table.
+This repository is not meant to be a complete web-based application. It is material for **dissecting how** a user account system works, step by step: how **registration** is saved, how **login** checks the account and creates a *session*, how the user **enters the dashboard**, and how **changing the name (username)** and **changing the password** are processed.
+
+The code is written in **PHP** and **MySQL** (using `mysqli`). Account data is stored in the `toko_madura` database, in the `users` table.
+
+### The flow being dissected
+
+| Stage | File | What happens |
+|---|---|---|
+| 1. Registration | `register.php` | The typed username is checked against the `users` table. If it does not exist yet, the username and password are saved with an `INSERT`; if it already exists, registration is rejected. |
+| 2. Login | `login.php` | The username and password are matched against the `users` table. If they match, a *session* (`is_login` and `username`) is created and the user is sent to the dashboard. If already logged in, this page redirects straight to the dashboard. |
+| 3. Dashboard | `dashboard.php` | The `is_login` *session* is checked every time the page opens; if it is missing, the user is sent back to `login.php`. The dashboard greets the user by username and provides **Logout** (clears the session), **Delete Account** (removes the account from the database), and links to the change password and change name pages. |
+| 4. Change Password | `ganti.php` | The old password is verified, then the confirmed new password is saved with an `UPDATE`. |
+| 5. Change Name | `gantinama.php` | The new username's availability is checked, then the username is updated in the database and in the *session*, so the dashboard shows the new name right away. |
 
 > The application interface and its messages are in Indonesian. This document gives the English meaning next to each message.
 
@@ -62,7 +74,7 @@ A simple web application built with **PHP** and **MySQL** (using `mysqli`) for m
 ## File Structure
 
 ```
-tugas_pbo/
+C:\wamp64\www\test\
 ├── database.php     # MySQL database connection
 ├── register.php     # registration page (requirement 1)
 ├── login.php        # login page
@@ -71,6 +83,8 @@ tugas_pbo/
 ├── gantinama.php    # change username page (requirement 3)
 └── toko_madura.sql  # database file (users and produk tables)
 ```
+
+On XAMPP, the folder location is `C:\xampp\htdocs\test\`.
 
 ---
 
@@ -107,25 +121,25 @@ tugas_pbo/
 
 ### Step 3 — Create the project folder
 
-Create a new folder inside the web server directory. This guide uses `tugas_pbo` as the folder name (feel free to change it).
+Create a new folder inside the web server directory. This guide uses `test` as the folder name (feel free to change it).
 
 **WampServer**
 
 ```
-C:\wamp64\www\tugas_pbo
+C:\wamp64\www\test
 ```
 
 **XAMPP**
 
 ```
-C:\xampp\htdocs\tugas_pbo
+C:\xampp\htdocs\test
 ```
 
 > The only difference is the location: WAMP uses the **`www`** folder, while XAMPP uses the **`htdocs`** folder.
 
 ### Step 4 — Put the code in the folder
 
-Copy these files into the `tugas_pbo` folder you just created:
+Copy these files into the `test` folder you just created:
 
 - `database.php`
 - `register.php`
@@ -134,7 +148,7 @@ Copy these files into the `tugas_pbo` folder you just created:
 - `ganti.php`
 - `gantinama.php`
 
-(`toko_madura.sql` is only used to import the database and does not need to be placed in the web server folder.)
+(`toko_madura.sql` may also be kept in this folder. It is only used when importing the database.)
 
 ### Step 5 — Run it in the browser
 
@@ -142,10 +156,10 @@ Open your browser and go to:
 
 | Page | Address |
 |---|---|
-| Register | `http://localhost/tugas_pbo/register.php` |
-| Login | `http://localhost/tugas_pbo/login.php` |
+| Register | `http://localhost/test/register.php` |
+| Login | `http://localhost/test/login.php` |
 
-> If your Apache runs on a port other than 80 (for example 8080), add the port to the address, e.g. `http://localhost:8080/tugas_pbo/login.php`.
+> If your Apache runs on a port other than 80 (for example 8080), add the port to the address, e.g. `http://localhost:8080/test/login.php`.
 
 ---
 
